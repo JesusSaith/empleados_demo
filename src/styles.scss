@@ -1,0 +1,107 @@
+@use 'sass:color';
+:root {
+  
+  --brand-primary: #00c9a7;
+ 
+  --brand-secondary: #0056b3;
+  
+  --brand-dark: #212529;
+ 
+  --brand-light: #f8f9fa;
+
+ 
+  --brand-gradient: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+}
+
+
+body {
+  color: var(--brand-dark);
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, .navbar-brand {
+  font-weight: 700; 
+  letter-spacing: -0.5px;
+}
+
+
+.btn-brand {
+  background: var(--brand-gradient);
+  border: none;
+  color: white;
+  font-weight: 600;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: linear-gradient(135deg, color.scale(#00c9a7, $lightness: -10%), color.scale(#0056b3, $lightness: -10%));
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 201, 167, 0.3);
+  }
+}
+
+
+.btn-outline-brand {
+  color: var(--brand-primary);
+  border-color: var(--brand-primary);
+  font-weight: 600;
+
+  &:hover {
+    background-color: var(--brand-primary);
+    color: white;
+  }
+}
+
+
+.card {
+  border: none;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05); /* Sombra más suave y moderna */
+  transition: transform 0.3s ease;
+
+  .card-header-brand {
+    background: var(--brand-gradient);
+    color: white;
+    font-weight: 600;
+    border-bottom: none;
+    padding: 1rem 1.25rem;
+  }
+}
+
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--brand-primary);
+  box-shadow: 0 0 0 0.25rem rgba(0, 201, 167, 0.25);
+}
+
+
+.table-brand-header {
+  thead {
+    background: var(--brand-gradient);
+    color: white;
+
+    th {
+      border-bottom: none;
+      font-weight: 600;
+    }
+  }
+
+ 
+  tbody tr:hover {
+    background-color: rgba(0, 201, 167, 0.05) !important;
+  }
+
+  
+  .table-active {
+     background-color: rgba(0, 201, 167, 0.1) !important;
+     border-left: 4px solid var(--brand-secondary);
+  }
+}
+.text-brand-primary {
+  color: var(--brand-primary) !important;
+}
+
+
+.form-control-lg, .form-select-lg {
+  font-size: 0.95rem;
+  padding: 0.7rem 1rem;
+}

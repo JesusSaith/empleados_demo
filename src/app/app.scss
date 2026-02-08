@@ -1,0 +1,28 @@
+
+.border-brand-primary {
+  border-color: var(--brand-primary) !important;
+}
+
+.text-brand-primary {
+  color: var(--brand-primary);
+}
+
+
+.nav-pills .nav-link {
+  color: var(--brand-dark);
+  border-radius: 50px; 
+  padding: 0.5rem 1.5rem;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: rgba(0, 201, 167, 0.1);
+    color: var(--brand-primary);
+  }
+}
+
+
+.nav-pills .nav-link.active-brand {
+  background: var(--brand-gradient);
+  color: white !important;
+  box-shadow: 0 2px 5px rgba(0, 201, 167, 0.3);
+}

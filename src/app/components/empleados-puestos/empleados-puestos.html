@@ -1,0 +1,125 @@
+<div class="container-fluid mt-4">
+  
+  <div class="row mb-3">
+    <div class="col-12">
+      <h2 class="text-brand-primary border-bottom pb-2">Asignación de Cargos</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    
+    <div class="col-md-8">
+      
+      <div class="card border-0 shadow-sm mb-3">
+        <div class="card-body p-2">
+          <input type="text" 
+                 class="form-control border-0" 
+                 placeholder="🔍 Buscar empleado o cargo..." 
+                 (input)="textoFiltro.set($any($event.target).value)">
+        </div>
+      </div>
+
+      <div class="table-responsive shadow-sm border-0 rounded bg-white">
+        <table class="table table-hover align-middle mb-0 table-brand-header">
+          <thead>
+            <tr>
+              <th class="ps-3">Empleado</th>
+              <th>Puesto Asignado</th>
+              <th class="text-end pe-3">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of listaAsignaciones() | filtroGlobal:textoFiltro()" 
+                (click)="editar(item)" 
+                style="cursor: pointer;"
+                [class.table-active]="item.id === asignacionForm.value.id">
+              
+              <td class="ps-3">
+                <div class="d-flex align-items-center">
+                  <div class="bg-light text-brand-primary rounded-circle d-flex justify-content-center align-items-center me-3 fw-bold border" 
+                       style="width: 40px; height: 40px;">
+                    {{ item.persona.nombre.charAt(0) }}
+                  </div>
+                  <div>
+                    <div class="fw-bold text-dark">{{ item.persona.nombre }} {{ item.persona.apellido }}</div>
+                    <small class="text-muted">ID: {{ item.persona.id }}</small>
+                  </div>
+                </div>
+              </td>
+              
+              <td>
+                <span class="badge rounded-pill px-3 py-2" 
+                      style="background: var(--brand-gradient); font-weight: 500;">
+                  {{ item.puesto.nombre }}
+                </span>
+              </td>
+              
+              <td class="text-end pe-3">
+                <button (click)="eliminar(item.id); $event.stopPropagation()" 
+                        class="btn btn-outline-danger btn-sm rounded-pill px-3">
+                   Desvincular
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="(listaAsignaciones() | filtroGlobal:textoFiltro()).length === 0">
+              <td colspan="3" class="text-center py-5 text-muted">
+                No hay asignaciones registradas.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-muted mt-2 small ms-1">Total: {{ (listaAsignaciones() | filtroGlobal:textoFiltro()).length }}</p>
+    </div>
+
+
+    <div class="col-md-4">
+      
+      <div class="d-flex justify-content-end mb-2">
+        <button class="btn btn-brand rounded-pill px-4" (click)="limpiar()">
+          + Nueva Asignación
+        </button>
+      </div>
+
+      <div class="card shadow border-0">
+        <div class="card-header card-header-brand text-white">
+          {{ esEdicion() ? 'Editar Asignación' : 'Asignar Puesto' }}
+        </div>
+        <div class="card-body p-4">
+          
+          <form [formGroup]="asignacionForm" (ngSubmit)="guardar()">
+            
+            <div class="mb-3">
+              <label class="form-label fw-bold text-secondary small text-uppercase">Empleado</label>
+              <select formControlName="personaId" class="form-select form-select-lg">
+                <option value="" disabled selected>-- Seleccionar --</option>
+                <option *ngFor="let p of personasDisponibles()" [value]="p.id">
+                  {{ p.nombre }} {{ p.apellido }}
+                </option>
+              </select>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-bold text-secondary small text-uppercase">Puesto</label>
+              <select formControlName="puestoId" class="form-select form-select-lg">
+                <option value="" disabled selected>-- Seleccionar --</option>
+                <option *ngFor="let puesto of puestosDisponibles()" [value]="puesto.id">
+                  {{ puesto.nombre }}
+                </option>
+              </select>
+            </div>
+
+            <button type="submit" 
+                    [disabled]="asignacionForm.invalid" 
+                    class="btn btn-brand w-100 py-2 fs-5">
+              {{ esEdicion() ? 'Actualizar' : 'Guardar Asignación' }}
+            </button>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

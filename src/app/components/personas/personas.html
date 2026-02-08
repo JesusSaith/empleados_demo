@@ -1,0 +1,134 @@
+<div class="container-fluid mt-4">
+  
+  <div class="row mb-3">
+    <div class="col-12">
+      <h2 class="text-brand-primary border-bottom pb-2">Gestión de Personas</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    
+    <div class="col-md-7">
+      
+      <div class="card border-0 shadow-sm mb-3">
+        <div class="card-body p-2">
+          <input type="text" 
+                 class="form-control border-0" 
+                 placeholder="🔍 Filtrar resultados..." 
+                 (input)="textoFiltro.set($any($event.target).value)">
+        </div>
+      </div>
+
+      <div class="table-responsive shadow-sm border-0 rounded bg-white">
+        <table class="table table-hover align-middle mb-0 table-brand-header">
+          <thead>
+            <tr>
+              <th class="ps-3">Nombre</th>
+              <th>Apellido</th>
+              <th>F. Nacimiento</th>
+              <th class="text-end pe-3">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of listaPersonas() | filtroGlobal:textoFiltro()" 
+                (click)="editar(p)" 
+                style="cursor: pointer;"
+                [class.table-active]="p.id === personaForm.value.id">
+              
+              <td class="ps-3 fw-semibold text-dark">{{ p.nombre }}</td>
+              <td>{{ p.apellido }}</td>
+              <td class="text-muted small">{{ p.fechaNacimiento }}</td>
+              
+              <td class="text-end pe-3">
+                <button (click)="eliminar(p.id); $event.stopPropagation()" 
+                        class="btn btn-outline-danger btn-sm rounded-pill px-3">
+                   Eliminar
+                </button>
+              </td>
+            </tr>
+
+            <tr *ngIf="(listaPersonas() | filtroGlobal:textoFiltro()).length === 0">
+              <td colspan="4" class="text-center py-5 text-muted">
+                <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                No hay registros que coincidan.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-muted mt-2 small ms-1">Total registros: {{ (listaPersonas() | filtroGlobal:textoFiltro()).length }}</p>
+    </div>
+
+
+    <div class="col-md-5">
+      
+      <div class="d-flex justify-content-end mb-2">
+        <button class="btn btn-brand rounded-pill px-4" (click)="limpiar()">
+          + Nueva Persona
+        </button>
+      </div>
+
+      <div class="card shadow border-0">
+        <div class="card-header card-header-brand text-white">
+          {{ esEdicion() ? 'Editar Persona' : 'Registrar Persona' }}
+        </div>
+        <div class="card-body p-4">
+          
+          <form [formGroup]="personaForm" (ngSubmit)="guardar()">
+            
+            <div class="mb-3">
+              <label class="form-label fw-bold text-secondary small text-uppercase">Nombre</label>
+              <input formControlName="nombre" 
+                    type="text" 
+                    class="form-control" 
+                    [class.is-invalid]="personaForm.get('nombre')?.invalid && personaForm.get('nombre')?.touched"
+                    placeholder="Ej. Juan"
+                    minlength="2"
+                    pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" 
+                    autocomplete="off">
+              <div class="invalid-feedback">
+                Ingresa un nombre válido.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-bold text-secondary small text-uppercase">Apellido</label>
+              <input formControlName="apellido" 
+                type="text" 
+                class="form-control"
+                [class.is-invalid]="personaForm.get('apellido')?.invalid && personaForm.get('apellido')?.touched"
+                placeholder="Ej. Pérez"
+                minlength="2"
+                pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" 
+                autocomplete="off">
+              <div class="invalid-feedback">
+                El apellido es requerido.
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-bold text-secondary small text-uppercase">Fecha de Nacimiento</label>
+              <input formControlName="fechaNacimiento" 
+                type="date" 
+                class="form-control"
+                [max]="fechaMaxima"
+                [class.is-invalid]="personaForm.get('fechaNacimiento')?.invalid && personaForm.get('fechaNacimiento')?.touched">
+              <div class="invalid-feedback">
+                La fecha es obligatoria.
+              </div>
+            </div>
+
+            <button type="submit" 
+                    [disabled]="personaForm.invalid" 
+                    class="btn btn-brand w-100 py-2 fs-5">
+              {{ esEdicion() ? 'Actualizar' : 'Guardar' }}
+            </button>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

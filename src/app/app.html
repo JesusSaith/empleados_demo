@@ -1,0 +1,23 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white py-3 shadow-sm border-top border-brand-primary border-3">
+  <div class="container">
+    <a class="navbar-brand fs-4" href="#">
+      <span class="text-brand-primary">Brand</span> Factory Demo
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <div class="navbar-nav nav-pills">
+        <a class="nav-link mx-1 fw-semibold" routerLink="/personas" routerLinkActive="active-brand">Personas</a>
+        <a class="nav-link mx-1 fw-semibold" routerLink="/puestos" routerLinkActive="active-brand">Puestos</a>
+        <a class="nav-link mx-1 fw-semibold" routerLink="/asignaciones" routerLinkActive="active-brand">Asignaciones</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="container py-4">
+  <router-outlet></router-outlet>
+</div>

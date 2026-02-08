@@ -1,0 +1,13 @@
+.table-active {
+  background-color: #e3f2fd !important; /* Azul muy clarito al seleccionar */
+  font-weight: bold;
+}
+
+.card-header {
+  font-weight: 600;
+}
+
+/* Efecto hover suave en la tabla */
+tbody tr:hover {
+  background-color: #f8f9fa;
+}
